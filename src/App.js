@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
 function App() {
   const [keyword, setKeyword] = useState("");
   const [article, setArticle] = useState("");
@@ -9,7 +8,6 @@ function App() {
   const [copied, setCopied] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
   const articleRef = useRef(null);
-
   // Generate Artikel
   const generateArticle = async () => {
     if (!keyword.trim()) {
@@ -23,7 +21,6 @@ function App() {
     setLoading(true);
     setError(null);
     setCopied(false);
-
     try {
       const { data } = await axios.post("https://back-pth9.onrender.com/generate", { keyword });
       setArticle(data.text);
@@ -32,31 +29,26 @@ function App() {
       setArticle("<p>Terjadi kesalahan saat memproses permintaan.</p>");
       setError("❌ Gagal menghasilkan artikel. Coba lagi nanti.");
     }
-
     setLoading(false);
   };
-
   // Copy ke Clipboard
   const copyToClipboard = () => {
     navigator.clipboard.writeText(article);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
   // Auto-scroll ke hasil artikel
   useEffect(() => {
     if (articleRef.current && article) {
       articleRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [article]);
-
   // Toggle Dark Mode
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
     localStorage.setItem("theme", newMode ? "dark" : "light");
   };
-
   return (
     <div
       style={{
@@ -92,7 +84,6 @@ function App() {
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
         </div>
-
         {/* Input Keyword */}
         <input
           type="text"
@@ -113,17 +104,15 @@ function App() {
             textAlign: "center",
           }}
         />
-
         {/* Error Handling */}
         {error && <p style={{ color: "red", marginBottom: "10px" }}>{error}</p>}
-
         {/* Button Generate */}
         <button
           onClick={generateArticle}
           style={{
             width: "60%",
             padding: "12px",
-            fontSize: "16px",
+            fontSize: "14px",
             borderRadius: "8px",
             border: "none",
             cursor: loading ? "not-allowed" : "pointer",
@@ -133,9 +122,76 @@ function App() {
           }}
           disabled={loading}
         >
-          {loading ? "⏳ Generating..." : "✨ Generate Article ✨"}
+          {loading ? "⏳ Generating..." : "✨GENERATE✨"}
         </button>
-
+		{/* Tombol Editor */}
+		<button
+		  onClick={async () => {
+			try {
+			  await navigator.clipboard.writeText(article);
+			  setCopied(true); // Set state copied agar user tahu berhasil
+			  setTimeout(() => {
+				window.open("https://rentry.co", "_blank");
+			  }, 1000); // Delay 1 detik agar user melihat efek copy
+			} catch (err) {
+			  console.error("❌ Gagal menyalin teks:", err);
+			  alert("Gagal menyalin artikel. Silakan coba lagi!");
+			}
+		  }}
+		  style={{
+			width: "60%",
+			padding: "12px",
+			marginTop: "10px",
+			fontSize: "14px",
+			borderRadius: "5px",
+			border: "none",
+			cursor: "pointer",
+			backgroundColor: copied ? "#218838" : "#28a745", // Warna hijau lebih gelap jika sudah disalin
+			color: "white",
+			transition: "background-color 0.3s ease",
+		  }}
+		  
+		>
+		  {copied ? "✨EDITOR✨" : "✨EDITOR✨"}
+		</button>
+		{/* Hasil Artikel */}
+		{article && (
+		  <div
+			ref={articleRef}
+			style={{
+			  marginTop: "20px",
+			  padding: "15px",
+			  borderRadius: "8px",
+			  backgroundColor: darkMode ? "#222" : "#fff",
+			  color: darkMode ? "#fff" : "#000",
+			  border: "1px solid #ccc",
+			  maxWidth: "1280px",
+			  textAlign: "left",
+			  lineHeight: "1.6",
+			  whiteSpace: "pre-line",
+			}}
+			dangerouslySetInnerHTML={{ __html: article }}
+		  />
+		)}
+		{/* Tombol Copy */}
+		{article && (
+		  <button
+			onClick={copyToClipboard}
+			style={{
+			  marginTop: "10px",
+			  padding: "10px 14px",
+			  borderRadius: "10px",
+			  border: "none",
+			  cursor: "pointer",
+			  backgroundColor: "#28a745",
+			  color: "#fff",
+			  fontSize: "14px",
+			  transition: "background-color 0.3s ease",
+			}}
+		  >
+			{copied ? "✅ Copied!" : "📋 Copy Article"}
+		  </button>
+		)}
         {/* Efek Loading */}
         {loading && (
           <div style={{ marginTop: "15px", textAlign: "center" }}>
@@ -144,7 +200,6 @@ function App() {
           </div>
         )}
       </div>
-      
       {/* Animasi CSS */}
       <style>
         {`
@@ -157,7 +212,6 @@ function App() {
             animation: spin 1s linear infinite;
             margin: auto;
           }
-
           @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -167,5 +221,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
