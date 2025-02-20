@@ -22,7 +22,7 @@ function App() {
     setError(null);
     setCopied(false);
     try {
-      const { data } = await axios.post("https://back-pth9.onrender.com/generate", { keyword });
+      const { data } = await axios.post("http://localhost:10000/generate", { keyword });
       setArticle(data.text);
     } catch (error) {
       console.error("❌ Error saat mengambil data:", error.response ? error.response.data : error.message);
@@ -124,6 +124,7 @@ function App() {
         >
           {loading ? "⏳ Generating..." : "✨GENERATE✨"}
         </button>
+
 		{/* Tombol Editor */}
 		<button
 		  onClick={async () => {
@@ -170,7 +171,7 @@ function App() {
 			  lineHeight: "1.6",
 			  whiteSpace: "pre-line",
 			}}
-			dangerouslySetInnerHTML={{ __html: article }}
+			dangerouslySetInnerHTML={{ __html: article.trim() !== "" ? article : "<p>Artikel belum tersedia.</p>" }}
 		  />
 		)}
 		{/* Tombol Copy */}
