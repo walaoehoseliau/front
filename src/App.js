@@ -24,7 +24,7 @@ function App() {
         setError(null);
         setCopied(false);
         try {
-            const { data } = await axios.post('http://localhost:5000/generate', { keyword });
+            const { data } = await axios.post('https://back-pth9.onrender.com/generate', { keyword });
             setArticle(data.text);
         } catch (error) {
             console.error("❌ Error saat mengambil data:", error.response ? error.response.data : error.message);
