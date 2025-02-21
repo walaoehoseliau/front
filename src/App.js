@@ -216,9 +216,8 @@ function App() {
 			}}
 		  >
 			{copied ? "✅ Copied!" : "📋 Copy Article"}
-		  </button>
-		)
-    </div>
-  );
+		</button>
+	)
+    );
 }
 export default App;
