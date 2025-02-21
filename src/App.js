@@ -124,6 +124,7 @@ function App() {
         >
           {loading ? "⏳ Generating..." : "✨GENERATE✨"}
         </button>
+
 		{/* Tombol Editor */}
 		<button
 		  onClick={async () => {
@@ -154,32 +155,6 @@ function App() {
 		>
 		  {copied ? "✨EDITOR✨" : "✨EDITOR✨"}
 		</button>
-		{loading && (
-		  <div style={{ marginTop: "15px", textAlign: "center" }}>
-		    <div className="loading-spinner"></div>
-		    <p style={{ fontSize: "14px", marginTop: "5px", opacity: "0.8" }}>Artikel sedang dibuat...</p>
-		  </div>
-		)}
-		
-		{/* Animasi CSS */}
-		<style>
-		  {`
-		    .loading-spinner {
-		      width: 40px;
-		      height: 40px;
-		      border: 4px solid rgba(255, 255, 255, 0.3);
-		      border-top: 4px solid #007bff;
-		      border-radius: 50%;
-		      animation: spin 1s linear infinite;
-		      margin: auto;
-		    }
-		    @keyframes spin {
-		      0% { transform: rotate(0deg); }
-		      100% { transform: rotate(360deg); }
-		    }
-		  `}
-		</style>
-
 		{/* Hasil Artikel */}
 		{article && (
 		  <div
@@ -216,8 +191,35 @@ function App() {
 			}}
 		  >
 			{copied ? "✅ Copied!" : "📋 Copy Article"}
-		</button>
-	)
-    );
+		  </button>
+		)}
+        {/* Efek Loading */}
+        {loading && (
+          <div style={{ marginTop: "15px", textAlign: "center" }}>
+            <div className="loading-spinner"></div>
+            <p style={{ fontSize: "14px", marginTop: "5px", opacity: "0.8" }}>Artikel sedang dibuat...</p>
+          </div>
+        )}
+      </div>
+      {/* Animasi CSS */}
+      <style>
+        {`
+          .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: auto;
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+    </div>
+  );
 }
 export default App;
