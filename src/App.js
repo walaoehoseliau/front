@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+oimport React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 function App() {
   const [keyword, setKeyword] = useState("");
@@ -22,7 +22,7 @@ function App() {
     setError(null);
     setCopied(false);
     try {
-      const { data } = await axios.post("https://walaoe.onrender.com/generate", { trimmedKeyword });
+      const { data } = await axios.post("https://walaoe.onrender.com/generate", { keyword });
       setArticle(data.text);
     } catch (error) {
       console.error("❌ Error saat mengambil data:", error.response ? error.response.data : error.message);
