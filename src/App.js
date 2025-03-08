@@ -145,24 +145,49 @@ function App() {
           {copied ? "✅ Copied!" : "📋 Copy Article"}
         </button>
       )}
-      {article && (
-        <div
-          ref={articleRef}
-          style={{
-            marginTop: "20px",
-            padding: "15px",
-            borderRadius: "8px",
-            backgroundColor: darkMode ? "#222" : "#fff",
-            color: darkMode ? "#fff" : "#000",
-            border: "1px solid #ccc",
-            maxWidth: "1280px",
-            textAlign: "left",
-            lineHeight: "1.6",
-            whiteSpace: "normal",
-          }}
-          dangerouslySetInnerHTML={{ __html: article.trim() !== "" ? article : "<p>Artikel belum tersedia.</p>" }}
-        />
+      {loading && (
+        <div style={{ marginTop: "15px", textAlign: "center" }}>
+          <div className="fancy-loading-spinner"></div>
+          <p style={{ fontSize: "14px", marginTop: "5px", opacity: "0.8" }}>Artikel sedang dibuat...</p>
+        </div>
       )}
+      <div ref={articleRef} style={{ marginTop: "20px", width: "100%", maxWidth: "800px" }}>
+        <div dangerouslySetInnerHTML={{ __html: article }} />
+      </div>
+      {/* Animasi CSS untuk loading spinner yang canggih */}
+      <style>
+        {`
+          .fancy-loading-spinner {
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 123, 255, 0.2);
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            animation: fancy-spin 1s linear infinite;
+            position: relative;
+          }
+          .fancy-loading-spinner::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 5px solid rgba(0, 123, 255, 0.1);
+            border-radius: 50%;
+            animation: fancy-spin-reverse 1.5s linear infinite;
+          }
+          @keyframes fancy-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          @keyframes fancy-spin-reverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+          }
+        `}
+      </style>
     </div>
   );
 }
