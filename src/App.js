@@ -16,8 +16,8 @@ function App() {
       setError("❌ Keyword tidak boleh kosong!");
       return;
     }
-    if (keyword.length > 100) {
-      setError("❌ Keyword terlalu panjang! Maksimal 100 karakter.");
+    if (keyword.length > 200) {
+      setError("❌ Keyword terlalu panjang! Maksimal 200 karakter.");
       return;
     }
     setLoading(true);
