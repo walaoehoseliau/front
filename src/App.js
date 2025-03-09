@@ -91,7 +91,7 @@ function App() {
           onChange={(e) => setKeyword(e.target.value)}
           maxLength={100}
           style={{
-            width: "90%",
+            width: "89%",
             padding: "12px",
             fontSize: "16px",
             marginBottom: "12px",
@@ -107,22 +107,22 @@ function App() {
         <button
           onClick={generateArticle}
           style={{
-            width: "60%",
+            width: "50%",
             padding: "12px",
             fontSize: "14px",
             borderRadius: "15px",
-            border: "none",
+            border: "fixed",
             cursor: loading ? "not-allowed" : "pointer",
             backgroundColor: loading ? "#6c757d" : "#007bff",
             color: "#ffffff",
             transition: "opacity 0.3s ease",
           }}
-          disabled={loading}
+          enable={loading}
         >
           {loading ? "⏳ Generating..." : "✨GENERATE✨"}
         </button>
       </div>
-      {loading && <p style={{ marginTop: "10px", color: "#007bff" }}>⏳ Generating...</p>}
+      {loading && <p style={{ marginTop: "12px", color: "#007bff" }}>⏳ Generating...</p>}
       {article && (
         <>
           <button
@@ -148,7 +148,7 @@ function App() {
               width: "100%",
               maxWidth: "400px",
               border: "2px solid #007bff",
-              borderRadius: "10px",
+              borderRadius: "15px",
               padding: "20px",
               backgroundColor: darkMode ? "#222" : "#fff",
               color: darkMode ? "#fff" : "#000",
