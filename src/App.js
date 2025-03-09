@@ -15,8 +15,8 @@ function App() {
       setError("❌ Keyword tidak boleh kosong!");
       return;
     }
-    if (keyword.length > 200) {
-      setError("❌ Keyword terlalu panjang! Maksimal 200 karakter.");
+    if (keyword.length > 100) {
+      setError("❌ Keyword terlalu panjang! Maksimal 100 karakter.");
       return;
     }
     setLoading(true);
@@ -72,7 +72,7 @@ function App() {
             onClick={toggleDarkMode}
             style={{
               padding: "10px 14px",
-              borderRadius: "8px",
+              borderRadius: "15px",
               border: "none",
               cursor: "pointer",
               backgroundColor: darkMode ? "#f0f0f0" : "#333",
@@ -91,11 +91,11 @@ function App() {
           onChange={(e) => setKeyword(e.target.value)}
           maxLength={100}
           style={{
-            width: "93%",
+            width: "90%",
             padding: "12px",
             fontSize: "16px",
             marginBottom: "12px",
-            borderRadius: "8px",
+            borderRadius: "15px",
             border: "1px solid #ccc",
             backgroundColor: darkMode ? "#333" : "#fff",
             color: darkMode ? "#fff" : "#000",
@@ -110,7 +110,7 @@ function App() {
             width: "60%",
             padding: "12px",
             fontSize: "14px",
-            borderRadius: "8px",
+            borderRadius: "15px",
             border: "none",
             cursor: loading ? "not-allowed" : "pointer",
             backgroundColor: loading ? "#6c757d" : "#007bff",
@@ -122,25 +122,43 @@ function App() {
           {loading ? "⏳ Generating..." : "✨GENERATE✨"}
         </button>
       </div>
+      {loading && <p style={{ marginTop: "10px", color: "#007bff" }}>⏳ Generating...</p>}
       {article && (
-        <div
-          ref={articleRef}
-          style={{
-            marginTop: "20px",
-            width: "100%",
-            maxWidth: "800px",
-            border: "2px solid #007bff",
-            borderRadius: "10px",
-            padding: "20px",
-            backgroundColor: darkMode ? "#222" : "#fff",
-            color: darkMode ? "#fff" : "#000",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            transition: "background-color 0.3s ease, color 0.3s ease",
-            display: article ? "block" : "none",
-          }}
-        >
-          <div dangerouslySetInnerHTML={{ __html: article }} />
-        </div>
+        <>
+          <button
+            onClick={copyToClipboard}
+            style={{
+              marginTop: "10px",
+              padding: "10px 14px",
+              borderRadius: "10px",
+              border: "none",
+              cursor: "pointer",
+              backgroundColor: "#28a745",
+              color: "#fff",
+              fontSize: "14px",
+              transition: "background-color 0.3s ease",
+            }}
+          >
+            {copied ? "✅ Copied!" : "📋 Copy Article"}
+          </button>
+          <div
+            ref={articleRef}
+            style={{
+              marginTop: "20px",
+              width: "100%",
+              maxWidth: "400px",
+              border: "2px solid #007bff",
+              borderRadius: "10px",
+              padding: "20px",
+              backgroundColor: darkMode ? "#222" : "#fff",
+              color: darkMode ? "#fff" : "#000",
+              boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
+              transition: "background-color 0.3s ease, color 0.3s ease",
+            }}
+          >
+            <div dangerouslySetInnerHTML={{ __html: article }} />
+          </div>
+        </>
       )}
     </div>
   );
